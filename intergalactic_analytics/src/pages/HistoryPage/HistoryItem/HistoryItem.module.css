@@ -1,0 +1,16 @@
+/* контенер для поля и кнпоки удаления */
+.list_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.list_item_left {
+  flex-grow: 1; /* занимает всё оставшееся пространство */
+}
+
+.list_item_right {
+  /* остаётся прижатым справа и занимает минимум места, сколько нужно */
+  margin-left: 10px;
+}
