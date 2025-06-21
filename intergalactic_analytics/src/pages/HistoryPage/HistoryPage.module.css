@@ -1,0 +1,10 @@
+.clearButton {
+
+}
+
+.trash_button {
+  background-color: #fff; /* Белый фон */
+  border: 2px solid #000000; /* Зелёная пунктирная рамка */
+  border-radius: 8px; /* Округлённые углы */
+  cursor: pointer; /* Указатель курсора при наведении */
+}

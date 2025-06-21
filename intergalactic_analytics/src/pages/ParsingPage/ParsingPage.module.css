@@ -1,0 +1,11 @@
+
+/* Текстовое описание */
+.text {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.clear_button {
+    width: 30px;
+}

@@ -1,0 +1,49 @@
+/* Фоновый цвет и общие стили */
+.fileStatus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f07178; /* Цвет фона (розовый) */
+  border-radius: 24px; /* Округлённые углы */
+  padding: 8px 16px; /* Поля вокруг содержимого */
+  color: white; /* Цвет текста */
+  font-family: Arial, sans-serif;
+}
+
+/* Левая секция (иконка и имя файла) */
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Расстояние между иконкой и названием файла */
+}
+
+.icon {
+  font-size: 18px; /* Размер иконки */
+}
+
+.fileName {
+  font-size: 14px; /* Размер текста имени файла */
+}
+
+/* Дата */
+.date {
+  font-size: 14px; /* Размер текста даты */
+}
+
+/* Статус */
+.status {
+  font-size: 14px; /* Размер текста статуса */
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Расстояние между текстом и эмодзи */
+}
+
+/* Стили для успешного статуса */
+.success {
+  color: #32a852; /* Зелёный цвет для успешного статуса */
+}
+
+/* Стили для неудачного статуса */
+.error {
+  color: #e74c3c; /* Красный цвет для неудачного статуса */
+}
