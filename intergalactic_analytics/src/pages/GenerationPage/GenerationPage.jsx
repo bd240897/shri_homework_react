@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Button from '../../components/Button/Button';
 import styles from './GenerationPage.module.css';
+import { URLS } from '../../api/urls';
+import { generateParams } from './utils';
+import classNames from 'classnames';
 
 const GenerationPage = () => {
-  const [size, setSize] = useState(0.1); // ГБ
-  const [withErrors, setWithErrors] = useState('off');
-  const [maxSpend, setMaxSpend] = useState('1000');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
@@ -15,10 +14,11 @@ const GenerationPage = () => {
     setError('');
     setDone(false);
 
-    const url = new URL('http://localhost:3000/report');
-    url.searchParams.append('size', size);
-    url.searchParams.append('withErrors', withErrors);
-    url.searchParams.append('maxSpend', maxSpend);
+    const url = new URL(URLS.generate);
+
+    url.searchParams.append('size', generateParams.size);
+    url.searchParams.append('withErrors', generateParams.withErrors);
+    url.searchParams.append('maxSpend', generateParams.maxSpend);
 
     try {
       const response = await fetch(url);
@@ -51,48 +51,33 @@ const GenerationPage = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Сгенерируйте готовый CSV-файл нажатием одной кнопки</h2>
+      <p className={styles.description}>
+        Сгенерируйте готовый CSV-файл нажатием одной кнопки
+      </p>
 
-      <div className={styles.settings}>
-        <label>
-          Размер отчета в ГБ:
-          <input
-            type="number"
-            step="any" // позволяет вводить дробные значения
-            min="0.1"
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Включать ошибки:
-          <select
-            value={withErrors}
-            onChange={(e) => setWithErrors(e.target.value)}
-          >
-            <option value="off">Нет</option>
-            <option value="on">Да</option>
-          </select>
-        </label>
-
-        <label>
-          Максимальная сумма расходов:
-          <input
-            type="text"
-            value={maxSpend}
-            onChange={(e) => setMaxSpend(e.target.value)}
-          />
-        </label>
+      <div className={styles.submitButtonContainer}>
+        <button
+          className={classNames(styles.submitButton, {
+            [styles.submitButtonError]: error,
+            [styles.submitButtonLoading]: loading,
+          })}
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? (
+            <div>
+              <img className={styles.img} src="/loading.svg" />
+            </div>
+          ) : (
+            'Начать генерацию'
+          )}
+        </button>
       </div>
-
-      <button onClick={handleSubmit} disabled={loading}>
-        {loading ? 'Идёт генерация...' : 'Начать генерацию'}
-      </button>
-
-      {loading && <div>Идёт процесс генерации...</div>}
-      {done && <div>Файл сгенерирован и загружен!</div>}
-      {error && <div className={styles.error}>{error}</div>}
+      <div className={styles.massegeContainer}>
+        {loading && <div>Идёт процесс генерации...</div>}
+        {done && <div>Файл сгенерирован и загружен!</div>}
+        {error && <div className={styles.error}>{error}</div>}
+      </div>
     </div>
   );
 };

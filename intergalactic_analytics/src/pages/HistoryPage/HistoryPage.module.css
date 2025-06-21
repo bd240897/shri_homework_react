@@ -1,9 +1,35 @@
-.clearButton {
+.historyItem {
+  margin-bottom: 5px;
 }
 
-.trash_button {
-  background-color: #fff; /* Белый фон */
-  border: 2px solid #000000; /* Зелёная пунктирная рамка */
-  border-radius: 8px; /* Округлённые углы */
-  cursor: pointer; /* Указатель курсора при наведении */
+.buttonsContainer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Кнопка отправки */
+.generateButton {
+  padding: 10px 13px;
+  font-size: 16px;
+  background-color: #2ae881;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Кнопка отправки */
+.clearButton {
+  padding: 10px 13px;
+  font-size: 16px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }

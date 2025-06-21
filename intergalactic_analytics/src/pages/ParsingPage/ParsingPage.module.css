@@ -1,10 +1,4 @@
 /* Базовые стили */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #FFD1F5; /* Фоновый цвет */
-}
 
 /* Текстовое описание */
 .description {
@@ -25,33 +19,46 @@
 .dropZone {
   width: 100%;
   height: 150px;
-  background-color: #E8C7F9; /* Светло-розовый фон */
-  border: 2px dashed #BDBDBD; /* Пунктирная граница */
+  background-color: #d4fae6; /* Светло-розовый фон */
+  border: 2px dashed #bdbdbd; /* Пунктирная граница */
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
 
+.dropZoneInside {
+  display: flex;
+  flex-direction: column;
+}
+
 .uploadButton {
   padding: 10px 20px;
   font-size: 16px;
   background-color: white;
-  border: 1px solid #BDBDBD;
+  border: 1px solid #bdbdbd;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .uploadButton:hover {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
+}
+
+.submitButtonContainer {
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 /* Кнопка отправки */
 .submitButton {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #BDBDBD; /* Серый фон */
+  background-color: #bdbdbd; /* Серый фон */
   color: white;
   border: none;
   border-radius: 5px;
@@ -59,8 +66,16 @@
   transition: background-color 0.3s ease;
 }
 
+.submitButtonError {
+  background-color: #ff5f00;
+}
+
 .submitButton:hover {
-  background-color: #A6A6A6;
+  background-color: #a6a6a6;
+}
+
+.clearButton {
+  width: 40px;
 }
 
 /* Подсказка */
@@ -78,5 +93,16 @@
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2px; 
+  gap: 2px;
+}
+
+.buttonReset {
+  background: none; /* Убираем фон */
+  border: none; /* Убираем рамку */
+  padding: 0; /* Убираем отступы */
+  margin: 0; /* Убираем внешние отступы */
+  font: inherit; /* Наследуем шрифт родителя */
+  color: inherit; /* Наследуем цвет текста */
+  cursor: pointer; /* Оставляем курсор как указатель */
+  outline: none; /* Убираем фокус-обводку (опционально) */
 }

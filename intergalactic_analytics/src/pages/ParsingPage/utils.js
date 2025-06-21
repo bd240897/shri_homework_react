@@ -11,4 +11,14 @@ export const mock_values = {
   less_spent_civ: 'humans',
 };
 
-export const HISTORY_KEY = 'history_records';
+/**
+ * TypeGuard
+ */
+export const isResult = (result) => {
+  const flag =
+    result &&
+    typeof result === 'object' &&
+    'total_spend_galactic' in result &&
+    typeof result.total_spend_galactic === 'number';
+  return Boolean(flag);
+};

@@ -1,5 +1,8 @@
+import { generateId } from '../../share/utils';
+
 export const history_mock = [
   {
+    id: generateId(),
     filename: '1234.csv',
     isSuccessful: true,
     date: '21-06-25',

@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import CardsHorizontal from '../../components/CardsHorizontal/CardsHorizontal';
-import { getCurrentDateFormatted } from '../../share/utils';
+import { generateId, getCurrentDateFormatted } from '../../share/utils';
+import { useStore } from '../../store';
 import styles from './ParsingPage.module.css'; // Твои CSS Module стили
-import { HISTORY_KEY, mock_values } from './utils';
+import { URLS } from '../../api/urls';
+import { isResult } from './utils';
+import classNames from 'classnames';
 
 const ParsingPage = () => {
   const [file, setFile] = useState(null); // Загруженный файл
   const [loading, setLoading] = useState(false); // Состояние загрузки
   const [error, setError] = useState(''); // Ошибки
-  // TODO delete mock_values
   const [result, setResult] = useState(null); // Результат агрегации (поэтапный)
 
-  console.log(result);
+  const { updateHistory } = useStore();
 
   /**
    * Обработчик выбора файла через кнопку
    */
-  const handleFileChange = (e) => {
+  const fileChangeHandler = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
@@ -26,38 +28,37 @@ const ParsingPage = () => {
   };
 
   const updateStorage = (isSuccessful = true) => {
-    const storageHistory = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
-
     const newHistoryElement = {
+      id: generateId(),
       filename: file.name,
       date: getCurrentDateFormatted(),
       isSuccessful,
       data: isSuccessful ? result : null,
     };
 
-    console.log('new el', newHistoryElement);
-
-    storageHistory.push(newHistoryElement);
-
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(storageHistory));
+    updateHistory(newHistoryElement);
   };
 
   /**
    * Обработчик отправки формы
    */
-  const handleSubmit = async () => {
+  const submitHandler = async () => {
     if (!file) {
       setError('Пожалуйста, выберите файл');
       return;
     }
 
-    const rows = 10000;
-
-    const url = `http://localhost:3000/aggregate?rows=${rows}`;
+    if (file.name.split('.').pop() !== 'csv') {
+      setError(`упс, не то...`);
+      return;
+    }
 
     setLoading(true);
     setError('');
     setResult(null);
+
+    const rows = 10000;
+    const url = `${URLS.agregate}?rows=${rows}`;
 
     const formData = new FormData();
     formData.append('file', file);
@@ -68,11 +69,6 @@ const ParsingPage = () => {
         method: 'POST',
         body: formData,
       });
-
-      // чтение всех ответов сразу
-      // TODO delete
-      // const data = await response.text()
-      // console.log(data)
 
       // чтение ответов в потоке
       const reader = response.body.getReader();
@@ -113,21 +109,9 @@ const ParsingPage = () => {
 
         buffer = lines[lines.length - 1]; // Сохраняем остаток строки
       }
-
-      // Сохранение истории в localStorage
-      // const history = JSON.parse(localStorage.getItem('history') || '[]');
-      // history.push({
-      //   timestamp: new Date().toISOString(),
-      //   filename: file.name,
-      //   result: accumulatedData,
-      // });
-      // localStorage.setItem('history', JSON.stringify(history));
     } catch (err) {
       setError(`Ошибка при обработке файла: ${err.message}`);
     } finally {
-      if (!isResult(result)) {
-        setError(`упс, не то...`);
-      }
       updateStorage(error.length > 0 ? true : false);
       setLoading(false);
     }
@@ -136,7 +120,7 @@ const ParsingPage = () => {
   /**
    * Обработчик перетаскивания файла
    */
-  const handleDrop = (e) => {
+  const dropHandler = (e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
     if (droppedFile && droppedFile.type === 'text/csv') {
@@ -148,14 +132,14 @@ const ParsingPage = () => {
     }
   };
 
-  const handleDragOver = (e) => {
+  const dragOverHandler = (e) => {
     e.preventDefault();
   };
 
   /**
    * Сброс состояния файла
    */
-  const handleClear = () => {
+  const clearHandler = () => {
     setFile(null);
     setResult(null);
     setError('');
@@ -163,57 +147,58 @@ const ParsingPage = () => {
     document.getElementById('fileInput').value = '';
   };
 
-  console.log(result);
-
-  const isResult = (result) => {
-    const flag =
-      result &&
-      typeof result === 'object' &&
-      'total_spend_galactic' in result &&
-      typeof result.total_spend_galactic === 'number';
-
-    return Boolean(flag);
-  };
-
   return (
     <>
       <div className={styles.container}>
-        {/* Текстовое описание */}
         <p className={styles.description}>
-          Загрузите csv файл и получите полную информацию о нём за сверхнизкое
-          время
+          Загрузите <strong>csv</strong> файл и получите{' '}
+          <strong>полную информацию</strong> о нём за сверхнизкое время
         </p>
-        <p className={styles.dropHint}>или перетащите сюда</p>
 
         {/* Область для загрузки файла */}
         <div
           className={styles.dropZone}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
+          onDrop={dropHandler}
+          onDragOver={dragOverHandler}
         >
-          <input
-            type="file"
-            id="fileInput"
-            accept=".csv"
-            onChange={handleFileChange}
-            hidden
-          />
-          <button
-            className={styles.uploadButton}
-            onClick={() => document.getElementById('fileInput').click()}
-          >
-            {file ? `Файл: ${file.name}` : 'Загрузить файл'}
-          </button>
+          <div className={styles.dropZoneInside}>
+            <div>
+              <input
+                type="file"
+                id="fileInput"
+                accept=".csv"
+                onChange={fileChangeHandler}
+                hidden
+              />
+              <button
+                className={styles.uploadButton}
+                onClick={() => document.getElementById('fileInput').click()}
+              >
+                {file ? `Файл: ${file.name}` : 'Загрузить файл'}
+              </button>
+            </div>
+            <div>
+              <span>или перетащите сюда</span>{' '}
+            </div>
+          </div>
         </div>
 
         {/* Кнопка отправки */}
-        <button
-          className={styles.submitButton}
-          onClick={handleSubmit}
-          disabled={!file || loading}
-        >
-          {loading ? 'Обработка...' : 'Отправить'}
-        </button>
+        <div className={styles.submitButtonContainer}>
+          <button
+            className={classNames(styles.submitButton)}
+            onClick={submitHandler}
+            disabled={!file || loading}
+          >
+            {loading ? 'Обработка...' : 'Отправить'}
+          </button>
+
+          {file && (
+            <button onClick={clearHandler} className={styles.buttonReset}>
+              <img className={styles.clearButton} src="/clear_button.svg" />
+            </button>
+          )}
+        </div>
 
         {/* Индикатор загрузки */}
         {loading && (
@@ -222,11 +207,6 @@ const ParsingPage = () => {
 
         {/* Ошибка */}
         {error && <p className={styles.error}>{error}</p>}
-
-        {/* Кнопка очистки */}
-        <button className={styles.clearButton} onClick={handleClear}>
-          Очистить
-        </button>
 
         {/* Подсказка */}
         <div className={styles.hint}>

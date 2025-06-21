@@ -1,15 +1,16 @@
-import { Outlet } from "react-router";
-import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
+import { Outlet } from 'react-router';
+import Footer from '../components/Footer/Footer';
+import Header from '../components/Header/Header';
+import styles from './MainLayout.module.css';
 
 const MainLayout = () => {
   return (
-    <div>
-      <Header />
-      <main>
+    <div className={styles.page}>
+      <Header className={styles.header} />
+      <main className={styles.content}>
         <Outlet />
       </main>
-      <Footer />
+      <Footer className={styles.footer} />
     </div>
   );
 };

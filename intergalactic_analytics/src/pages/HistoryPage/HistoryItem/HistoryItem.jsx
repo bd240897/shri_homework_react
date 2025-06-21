@@ -1,15 +1,13 @@
 // src/pages/HistoryPage/HistoryItem/HistoryItem.jsx
 import React, { useState } from 'react';
-import styles from './HistoryItem.module.css';
-import FileStatus from './FileStatus/FileStatus';
-import Modal from '../../../components/Modal/Modal';
 import CardsVertical from '../../../components/CardsVertical/CardsVertical';
-import { mock_values } from '../../ParsingPage/utils';
+import Modal from '../../../components/Modal/Modal';
+import FileStatus from './FileStatus/FileStatus';
+import styles from './HistoryItem.module.css';
+import classNames from 'classnames';
 
-const HistoryItem = ({ record, onDelete }) => {
+const HistoryItem = ({ record, onDelete, className }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log(record);
 
   const openModal = () => {
     if (record.data) {
@@ -22,24 +20,24 @@ const HistoryItem = ({ record, onDelete }) => {
   };
 
   return (
-    <div className={styles.list_item}>
+    <div className={classNames(styles.item, className)}>
       <FileStatus
         fileName={record.filename}
         date={record.date}
         isSuccessful={record.isSuccessful}
-        className={styles.list_item_left}
+        className={styles.fileStatus}
         onClick={openModal}
       />
 
       <button
-        className={styles.trash_button}
+        className={styles.trashButton}
         onClick={(e) => {
           e.stopPropagation();
-          onDelete();
+          onDelete(record.id);
         }}
         aria-label="Удалить"
       >
-        <img src="trash.svg" alt="Удалить" />
+        <img className={styles.trashButtonIcon} src="trash.svg" alt="Удалить" />
       </button>
 
       <Modal isOpen={isOpen} onClose={closeModal}>
