@@ -1,0 +1,50 @@
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.img {
+  width: 15px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.description {
+  text-align: center;
+}
+
+.submitButtonContainer {
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Кнопка отправки */
+.submitButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2ae881;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButtonError {
+  background-color: #ff5f00;
+}
+
+.submitButtonLoading {
+  background-color: #cb81ff;
+}
+
+.submitButton:hover {
+  background-color: #a6a6a6;
+}
+
+.massegeContainer {
+  text-align: center;
+}

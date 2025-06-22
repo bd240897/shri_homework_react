@@ -1,0 +1,26 @@
+{
+  "editor.tabSize": 2,
+  "editor.indentSize": 2,
+  "editor.detectIndentation": false,
+  "editor.fontSize": 14,
+  "editor.lineHeight": 20,
+  "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.enable": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.printWidth": 80,
+  "prettier.arrowParens": "always",
+  "files.autoSave": "onFocusChange",
+  "javascript.suggestionActions.enabled": true,
+  "javascript.useCodeSnippetsOnMethodSuggest": true,
+  "terminal.integrated.fontSize": 14,
+  "explorer.compactFolders": false,
+  "workbench.tree.indent": 20,
+  "workbench.colorTheme": "Default Dark+"
+}

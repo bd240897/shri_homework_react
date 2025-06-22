@@ -1,0 +1,28 @@
+/* контенер для поля и кнпоки удаления */
+.item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.fileStatus {
+  flex-grow: 1; /* занимает всё оставшееся пространство */
+}
+
+.trashButtonIcon {
+  width: 25px;
+}
+
+/* Кнопка отправки */
+.trashButton {
+  padding: 10px 13px;
+  font-size: 16px;
+  background-color: white;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

@@ -1,0 +1,53 @@
+/* Фоновый цвет и общие стили */
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Пример сетки из 12 колонок */
+  align-items: center;
+  gap: 10px;
+  background-color: #cb81ff;
+  border-radius: 24px; /* Округлённые углы */
+  padding: 8px 16px; /* Поля вокруг содержимого */
+  color: black; /* Цвет текста */
+  font-family: Arial, sans-serif;
+}
+
+/* Левая секция (иконка и имя файла) */
+.filenameContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Расстояние между иконкой и названием файла */
+}
+
+.fileIcon {
+  width: 30px;
+}
+
+.happyIcon {
+  width: 26px;
+}
+
+.setIcon {
+  width: 30px;
+}
+
+.successBlock {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorBlock {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.success {
+  color: black;
+}
+
+.error {
+  color: #8f64ae;
+}

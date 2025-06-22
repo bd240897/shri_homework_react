@@ -1,0 +1,70 @@
+/* Базовые стили */
+.header {
+  padding: 20px 0;
+  margin: 4px 40px;
+}
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.container_left {
+  display: flex;
+  gap: 30px;
+}
+
+/* Логотип */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.img {
+  width: 200px;
+}
+
+/* Название сервиса */
+.title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-grow: 1;
+  text-align: center;
+  background-color: #cb81ff;
+  padding: 5px;
+}
+
+/* Меню */
+.nav {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navItem img {
+  width: 20px;
+  height: 20px;
+}
+
+.navItem:hover,
+.navItem.active {
+  color: #007bff;
+}
