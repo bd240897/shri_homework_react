@@ -1,11 +1,32 @@
-/* Кнопка отправки */
 .submitButton {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #BDBDBD; /* Серый фон */
-  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #a6a6a6;
+}
+
+.green {
+  background-color: var(--green-button-color);
+  color: black;
+}
+
+.gray {
+  background-color: var(--gray-button-color);
+  color: #787878;
+}
+
+.yellow {
+  background-color: var(--yellow-button-color);
+  color: black;
+}
+
+.black {
+  background-color: var(--black-button-color);
+  color: white;
 }

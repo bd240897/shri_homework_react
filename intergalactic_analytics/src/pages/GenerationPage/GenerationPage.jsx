@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import styles from './GenerationPage.module.css';
 import { URLS } from '../../api/urls';
+import Button from '../../components/Button/Button';
+import UploadButton from '../../components/UploadButton/UploadButton';
+import styles from './GenerationPage.module.css';
 import { generateParams } from './utils';
-import classNames from 'classnames';
 
 const GenerationPage = () => {
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,29 @@ const GenerationPage = () => {
     }
   };
 
+  /**
+   * Сброс состояния файла
+   */
+  const clearHandler = () => {
+    setLoading(false);
+    setError('');
+    setDone(false);
+  };
+
+  /**
+   * Сгенерить статус для кнопки загрузки
+   */
+  const getUploadButtonType = () => {
+    if (error) {
+      return 'error';
+    } else if (loading) {
+      return 'loading';
+    } else if (done) {
+      return 'done';
+    }
+    return 'init';
+  };
+
   return (
     <div className={styles.container}>
       <p className={styles.description}>
@@ -56,23 +80,22 @@ const GenerationPage = () => {
       </p>
 
       <div className={styles.submitButtonContainer}>
-        <button
-          className={classNames(styles.submitButton, {
-            [styles.submitButtonError]: error,
-            [styles.submitButtonLoading]: loading,
-          })}
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {loading ? (
-            <div>
-              <img className={styles.img} src="/loading.svg" />
-            </div>
-          ) : (
-            'Начать генерацию'
-          )}
-        </button>
+        {!(loading || error || done) ? (
+          <Button type={'green'} onClick={handleSubmit} disabled={loading}>
+            Начать генерацию
+          </Button>
+        ) : (
+          <UploadButton
+            type={getUploadButtonType()}
+            onClick={handleSubmit}
+            disabled={loading | done}
+            clearHandler={clearHandler}
+          >
+            {done ? 'Done' : error ? 'Ошибка' : 'Начать генерацию'}
+          </UploadButton>
+        )}
       </div>
+
       <div className={styles.massegeContainer}>
         {loading && <div>Идёт процесс генерации...</div>}
         {done && <div>Файл сгенерирован и загружен!</div>}

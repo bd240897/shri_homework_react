@@ -1,4 +1,3 @@
-// src/pages/HistoryPage/HistoryItem/HistoryItem.jsx
 import React, { useState } from 'react';
 import CardsVertical from '../../../components/CardsVertical/CardsVertical';
 import Modal from '../../../components/Modal/Modal';

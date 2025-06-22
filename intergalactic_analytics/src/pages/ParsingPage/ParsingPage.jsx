@@ -2,10 +2,12 @@ import React, { useRef, useState } from 'react';
 import CardsHorizontal from '../../components/CardsHorizontal/CardsHorizontal';
 import { generateId, getCurrentDateFormatted } from '../../share/utils';
 import { useStore } from '../../store';
-import styles from './ParsingPage.module.css'; // Твои CSS Module стили
+import styles from './ParsingPage.module.css';
 import { URLS } from '../../api/urls';
 import { isResult } from './utils';
 import classNames from 'classnames';
+import Button from '../../components/Button/Button';
+import UploadButton from '../../components/UploadButton/UploadButton';
 
 const ParsingPage = () => {
   const [file, setFile] = useState(null); // Загруженный файл
@@ -13,6 +15,7 @@ const ParsingPage = () => {
   const [error, setError] = useState(''); // Ошибки
   const [result, setResult] = useState(null); // Результат агрегации (поэтапный)
   const [isDragging, setIsDragging] = useState(false); // Новое состояние
+  const [done, setDone] = useState(false); // Успешный рез-т или нет
   const fileInputRef = useRef(null);
 
   const { updateHistory } = useStore();
@@ -114,6 +117,7 @@ const ParsingPage = () => {
 
         buffer = lines[lines.length - 1]; // Сохраняем остаток строки
       }
+      setDone(true);
     } catch (err) {
       setError(`Ошибка при обработке файла: ${err.message}`);
     } finally {
@@ -165,9 +169,26 @@ const ParsingPage = () => {
     setFile(null);
     setResult(null);
     setError('');
+    setDone(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = ''; // безопасно очищаем input
     }
+  };
+
+  /**
+   * Сгенерить статус для кнопки загрузки
+   */
+  const getUploadButtonType = () => {
+    if (done) {
+      return 'done';
+    } else if (error) {
+      return 'error';
+    } else if (loading) {
+      return 'loading';
+    } else if (file) {
+      return 'file';
+    }
+    return 'init';
   };
 
   return (
@@ -197,17 +218,14 @@ const ParsingPage = () => {
                 ref={fileInputRef} // <-- добавили ref
                 hidden
               />
-              <button
+              <UploadButton
+                type={getUploadButtonType()}
                 className={styles.uploadButton}
-                onClick={() => document.getElementById('fileInput').click()}
+                onClick={() => fileInputRef.current.click()}
+                clearHandler={clearHandler}
               >
                 {file ? `Файл: ${file.name}` : 'Загрузить файл'}
-              </button>
-              {file && (
-                <button onClick={clearHandler} className={styles.buttonReset}>
-                  <img className={styles.clearButton} src="/clear_button.svg" />
-                </button>
-              )}
+              </UploadButton>
             </div>
             <div>
               <span>или перетащите сюда</span>{' '}
@@ -217,13 +235,13 @@ const ParsingPage = () => {
 
         {/* Кнопка отправки */}
         <div className={styles.submitButtonContainer}>
-          <button
-            className={classNames(styles.submitButton)}
+          <Button
+            type={file ? 'green' : 'gray'}
             onClick={submitHandler}
             disabled={!file || loading}
           >
             {loading ? 'Обработка...' : 'Отправить'}
-          </button>
+          </Button>
         </div>
 
         {/* Индикатор загрузки */}

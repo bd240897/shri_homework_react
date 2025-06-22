@@ -1,12 +1,17 @@
-import React from "react";
-import styles from './Button.module.css'; // Твои CSS Module стили
+import React from 'react';
+import styles from './Button.module.css';
+import classNames from 'classnames';
 
-const Button = ({className, handleSubmit, disabled, children}) => {
+const Button = ({ className, children, type, ...props }) => {
   return (
     <button
-      className={`${className} ${styles.submitButton}`}
-      onClick={handleSubmit}
-      disabled={disabled}
+      className={classNames(styles.submitButton, className, {
+        [styles.black]: type === 'black',
+        [styles.green]: type === 'green',
+        [styles.gray]: type === 'gray',
+        [styles.yellow]: type === 'yellow',
+      })}
+      {...props}
     >
       {children}
     </button>

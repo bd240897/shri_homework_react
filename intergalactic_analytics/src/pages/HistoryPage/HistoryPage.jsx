@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
+import Button from '../../components/Button/Button';
 import { useStore } from '../../store';
 import HistoryItem from './HistoryItem/HistoryItem';
 import styles from './HistoryPage.module.css';
-import { history_mock } from './utils';
 
 const HistoryPage = () => {
   const navigate = useNavigate();
 
-  const { history, updateHistory, clearHistory, deleteHisteryItem } =
-    useStore();
-
-  // TODO delete
-  // useEffect(() => {
-  //   updateHistory(history_mock[0]);
-  // }, []);
+  const { history, clearHistory, deleteHisteryItem } = useStore();
 
   /**
    * Удалить одну запись
@@ -33,7 +27,7 @@ const HistoryPage = () => {
   /**
    * Редирект на генерацию
    */
-  const handleGenerate = () => {
+  const generateHandler = () => {
     navigate('/generation');
   };
 
@@ -53,13 +47,13 @@ const HistoryPage = () => {
       )}
 
       <div className={styles.buttonsContainer}>
-        <button className={styles.generateButton} onClick={handleGenerate}>
+        <Button type="green" onClick={generateHandler}>
           Сгенерировать больше
-        </button>
+        </Button>
         {history.length > 0 && (
-          <button className={styles.clearButton} onClick={clearHandler}>
+          <Button type="black" onClick={clearHandler}>
             Очистить всё
-          </button>
+          </Button>
         )}
       </div>
     </div>
