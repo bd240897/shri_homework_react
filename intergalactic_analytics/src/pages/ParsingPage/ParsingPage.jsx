@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import CardsHorizontal from '../../components/CardsHorizontal/CardsHorizontal';
 import { generateId, getCurrentDateFormatted } from '../../share/utils';
 import { useStore } from '../../store';
@@ -12,6 +12,8 @@ const ParsingPage = () => {
   const [loading, setLoading] = useState(false); // Состояние загрузки
   const [error, setError] = useState(''); // Ошибки
   const [result, setResult] = useState(null); // Результат агрегации (поэтапный)
+  const [isDragging, setIsDragging] = useState(false); // Новое состояние
+  const fileInputRef = useRef(null);
 
   const { updateHistory } = useStore();
 
@@ -130,10 +132,17 @@ const ParsingPage = () => {
     } else {
       setError('Пожалуйста, загрузите CSV-файл');
     }
+    setIsDragging(false); // Завершаем drag
   };
 
   const dragOverHandler = (e) => {
     e.preventDefault();
+    setIsDragging(true); // Начинаем drag
+  };
+
+  const dragLeaveHandler = (e) => {
+    e.preventDefault();
+    setIsDragging(false); // Вышли за пределы
   };
 
   /**
@@ -143,8 +152,9 @@ const ParsingPage = () => {
     setFile(null);
     setResult(null);
     setError('');
-    setHighlights([]);
-    document.getElementById('fileInput').value = '';
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // безопасно очищаем input
+    }
   };
 
   return (
@@ -157,17 +167,21 @@ const ParsingPage = () => {
 
         {/* Область для загрузки файла */}
         <div
-          className={styles.dropZone}
+          className={classNames(styles.dropZone, {
+            [styles.dropZoneActive]: isDragging,
+          })}
           onDrop={dropHandler}
           onDragOver={dragOverHandler}
+          onDragLeave={dragLeaveHandler}
         >
           <div className={styles.dropZoneInside}>
-            <div>
+            <div className={styles.submitButtonContainer}>
               <input
                 type="file"
                 id="fileInput"
                 accept=".csv"
                 onChange={fileChangeHandler}
+                ref={fileInputRef} // <-- добавили ref
                 hidden
               />
               <button
@@ -176,6 +190,11 @@ const ParsingPage = () => {
               >
                 {file ? `Файл: ${file.name}` : 'Загрузить файл'}
               </button>
+              {file && (
+                <button onClick={clearHandler} className={styles.buttonReset}>
+                  <img className={styles.clearButton} src="/clear_button.svg" />
+                </button>
+              )}
             </div>
             <div>
               <span>или перетащите сюда</span>{' '}
@@ -192,12 +211,6 @@ const ParsingPage = () => {
           >
             {loading ? 'Обработка...' : 'Отправить'}
           </button>
-
-          {file && (
-            <button onClick={clearHandler} className={styles.buttonReset}>
-              <img className={styles.clearButton} src="/clear_button.svg" />
-            </button>
-          )}
         </div>
 
         {/* Индикатор загрузки */}
