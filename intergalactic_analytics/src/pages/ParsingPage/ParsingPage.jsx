@@ -29,15 +29,17 @@ const ParsingPage = () => {
     }
   };
 
-  const updateStorage = (isSuccessful = true) => {
+  /**
+   * Сгенерить и обновить данные в стор
+   */
+  const updateStorage = (isSuccessful = true, result, filename) => {
     const newHistoryElement = {
       id: generateId(),
-      filename: file.name,
+      filename,
       date: getCurrentDateFormatted(),
       isSuccessful,
       data: isSuccessful ? result : null,
     };
-
     updateHistory(newHistoryElement);
   };
 
@@ -65,6 +67,8 @@ const ParsingPage = () => {
     const formData = new FormData();
     formData.append('file', file);
 
+    let accumulatedData = {};
+
     try {
       // отправка запроса
       const response = await fetch(url, {
@@ -76,7 +80,6 @@ const ParsingPage = () => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
-      let accumulatedData = {};
 
       // ждет пока сервер отдаст все (1)
       while (true) {
@@ -114,7 +117,11 @@ const ParsingPage = () => {
     } catch (err) {
       setError(`Ошибка при обработке файла: ${err.message}`);
     } finally {
-      updateStorage(error.length > 0 ? true : false);
+      updateStorage(
+        error.length === 0 ? true : false,
+        accumulatedData,
+        file.name
+      );
       setLoading(false);
     }
   };
@@ -135,14 +142,20 @@ const ParsingPage = () => {
     setIsDragging(false); // Завершаем drag
   };
 
+  /**
+   * Обработчик перетаскивания файла. Начинаем drag
+   */
   const dragOverHandler = (e) => {
     e.preventDefault();
-    setIsDragging(true); // Начинаем drag
+    setIsDragging(true);
   };
 
+  /**
+   * Обработчик перетаскивания файла. Вышли за пределы drag
+   */
   const dragLeaveHandler = (e) => {
     e.preventDefault();
-    setIsDragging(false); // Вышли за пределы
+    setIsDragging(false);
   };
 
   /**
