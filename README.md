@@ -24,9 +24,9 @@ npm run start
 
 `classnames` - склеивание классов
 
-`react-router` - клинетский роутинг
+`react-router` - клиентский роутинг
 
-`zustand` - стейт менеджер/ работа с localstore
+`zustand` - стейт менеджер/ работа с LocalStorage,
 
 ## Структура папок
 
@@ -42,6 +42,6 @@ npm run start
 
 `store` - стор на zustand
 
-`share` - ширенные вспомогательные функции
+`share` - вспомогательные функции
 
 `main.jsx` - файл точки входа, в котором расположен и роутинг
