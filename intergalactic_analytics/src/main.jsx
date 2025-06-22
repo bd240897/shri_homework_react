@@ -4,6 +4,7 @@ import MainLayout from './layouts/MainLayout';
 import GenerationPage from './pages/GenerationPage/GenerationPage';
 import HistoryPage from './pages/HistoryPage/HistoryPage';
 import ParsingPage from './pages/ParsingPage/ParsingPage';
+import './index.css';
 
 const root = document.getElementById('root');
 

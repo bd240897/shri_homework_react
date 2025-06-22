@@ -9,27 +9,3 @@
   align-items: center;
   gap: 10px;
 }
-
-/* Кнопка отправки */
-.generateButton {
-  padding: 10px 13px;
-  font-size: 16px;
-  background-color: #2ae881;
-  color: black;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-/* Кнопка отправки */
-.clearButton {
-  padding: 10px 13px;
-  font-size: 16px;
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}

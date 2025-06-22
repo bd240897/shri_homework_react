@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.uploadButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: white;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadButton:hover {
+  background-color: #f5f5f5;
+}
+
+.init {
+  background-color: white;
+  color: black;
+}
+.file {
+  color: black;
+  background-color: #cb81ff;
+}
+.loading {
+  color: black;
+  background-color: #cb81ff;
+}
+.done {
+  color: black;
+  background-color: #d4fae6;
+}
+
+.error {
+  color: white;
+  background-color: #ff5f00;
+}
+
+.img {
+  width: 15px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.clearButton {
+  background: none; /* Убираем фон */
+  border: none; /* Убираем рамку */
+  padding: 0; /* Убираем отступы */
+  margin: 0; /* Убираем внешние отступы */
+  font: inherit; /* Наследуем шрифт родителя */
+  color: inherit; /* Наследуем цвет текста */
+  cursor: pointer; /* Оставляем курсор как указатель */
+  outline: none; /* Убираем фокус-обводку (опционально) */
+}
+
+.clearButtonImage {
+  width: 40px;
+}
