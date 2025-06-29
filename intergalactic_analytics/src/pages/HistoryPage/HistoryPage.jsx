@@ -8,13 +8,13 @@ import styles from './HistoryPage.module.css';
 const HistoryPage = () => {
   const navigate = useNavigate();
 
-  const { history, clearHistory, deleteHisteryItem } = useStore();
+  const { history, clearHistory, deleteHistoryItem } = useStore();
 
   /**
    * Удалить одну запись
    **/
   const deleteHandler = (id) => {
-    deleteHisteryItem(id);
+    deleteHistoryItem(id);
   };
 
   /**
@@ -32,12 +32,13 @@ const HistoryPage = () => {
   };
 
   return (
-    <div>
+    <div className={'historyPage'}>
       {history.length === 0 ? (
         <p>Нет записей в истории</p>
       ) : (
         history.map((record) => (
           <HistoryItem
+            data-testid="history-item"
             key={record.id}
             record={record}
             onDelete={() => deleteHandler(record.id)}
@@ -47,11 +48,19 @@ const HistoryPage = () => {
       )}
 
       <div className={styles.buttonsContainer}>
-        <Button type="green" onClick={generateHandler}>
+        <Button
+          type="green"
+          onClick={generateHandler}
+          data-testid="generate-button"
+        >
           Сгенерировать больше
         </Button>
         {history.length > 0 && (
-          <Button type="black" onClick={clearHandler}>
+          <Button
+            type="black"
+            onClick={clearHandler}
+            data-testid="clear-button"
+          >
             Очистить всё
           </Button>
         )}

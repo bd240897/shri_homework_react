@@ -13,7 +13,7 @@ const ParsingPage = () => {
   const [file, setFile] = useState(null); // Загруженный файл
   const [loading, setLoading] = useState(false); // Состояние загрузки
   const [error, setError] = useState(''); // Ошибки
-  const [result, setResult] = useState(null); // Результат агрегации (поэтапный)
+  const [result, setResult] = React.useState(null); // Результат агрегации (поэтапный)
   const [isDragging, setIsDragging] = useState(false); // Новое состояние
   const [done, setDone] = useState(false); // Успешный рез-т или нет
   const fileInputRef = useRef(null);
@@ -192,9 +192,9 @@ const ParsingPage = () => {
   };
 
   return (
-    <>
+    <div className={'parsingPage'}>
       <div className={styles.container}>
-        <p className={styles.description}>
+        <p className={styles.description} data-testid="page-description">
           Загрузите <strong>csv</strong> файл и получите{' '}
           <strong>полную информацию</strong> о нём за сверхнизкое время
         </p>
@@ -211,6 +211,7 @@ const ParsingPage = () => {
           <div className={styles.dropZoneInside}>
             <div className={styles.submitButtonContainer}>
               <input
+                data-testid="file-input"
                 type="file"
                 id="fileInput"
                 accept=".csv"
@@ -236,9 +237,10 @@ const ParsingPage = () => {
         {/* Кнопка отправки */}
         <div className={styles.submitButtonContainer}>
           <Button
+            data-testid="submit-button"
             type={file ? 'green' : 'gray'}
             onClick={submitHandler}
-            disabled={!file || loading}
+            disabled={Boolean(!file) || Boolean(loading)}
           >
             {loading ? 'Обработка...' : 'Отправить'}
           </Button>
@@ -260,11 +262,11 @@ const ParsingPage = () => {
 
       {/* Результат */}
       {isResult(result) && (
-        <div>
+        <div data-testid="highlights">
           <CardsHorizontal values={result} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

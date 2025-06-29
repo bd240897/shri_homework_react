@@ -8,7 +8,7 @@ export const useStore = create(
       updateHistory: (newElement) =>
         set((state) => ({ history: [...state.history, newElement] })),
       clearHistory: () => set((state) => ({ history: [] })),
-      deleteHisteryItem: (id) =>
+      deleteHistoryItem: (id) =>
         set((state) => ({
           history: state.history.filter((el) => el.id !== id),
         })),

@@ -5,7 +5,7 @@ import FileStatus from './FileStatus/FileStatus';
 import styles from './HistoryItem.module.css';
 import classNames from 'classnames';
 
-const HistoryItem = ({ record, onDelete, className }) => {
+const HistoryItem = ({ record, onDelete, className, ...props }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -19,7 +19,7 @@ const HistoryItem = ({ record, onDelete, className }) => {
   };
 
   return (
-    <div className={classNames(styles.item, className)}>
+    <div className={classNames(styles.item, className)} {...props}>
       <FileStatus
         fileName={record.filename}
         date={record.date}
@@ -39,7 +39,7 @@ const HistoryItem = ({ record, onDelete, className }) => {
         <img className={styles.trashButtonIcon} src="trash.svg" alt="Удалить" />
       </button>
 
-      <Modal isOpen={isOpen} onClose={closeModal}>
+      <Modal isOpen={isOpen} onClose={closeModal} data-testid="modal-window">
         <CardsVertical values={record.data} />
       </Modal>
     </div>

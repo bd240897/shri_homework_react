@@ -21,6 +21,7 @@ const Header = () => {
         {/* Меню */}
         <nav className={styles.nav}>
           <NavLink
+            data-testid="parsing-link"
             className={({ isActive }) =>
               isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
             }
@@ -31,6 +32,7 @@ const Header = () => {
             CSV Аналитик
           </NavLink>
           <NavLink
+            data-testid="generation-link"
             className={({ isActive }) =>
               isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
             }
@@ -40,6 +42,7 @@ const Header = () => {
             CSV Генератор
           </NavLink>
           <NavLink
+            data-testid="history-link"
             className={({ isActive }) =>
               isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
             }
