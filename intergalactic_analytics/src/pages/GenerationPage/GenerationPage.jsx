@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button';
 import UploadButton from '../../components/UploadButton/UploadButton';
 import styles from './GenerationPage.module.css';
 import { generateParams } from './utils';
+import classNames from 'classnames';
 
 const GenerationPage = () => {
   const [loading, setLoading] = useState(false);
@@ -74,14 +75,19 @@ const GenerationPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <p className={styles.description}>
+    <div className={classNames(styles.container, 'generationPage')}>
+      <p className={styles.description} data-testid="page-description">
         Сгенерируйте готовый CSV-файл нажатием одной кнопки
       </p>
 
       <div className={styles.submitButtonContainer}>
         {!(loading || error || done) ? (
-          <Button type={'green'} onClick={handleSubmit} disabled={loading}>
+          <Button
+            type={'green'}
+            onClick={handleSubmit}
+            disabled={loading}
+            data-testid="upload-button"
+          >
             Начать генерацию
           </Button>
         ) : (
@@ -90,6 +96,7 @@ const GenerationPage = () => {
             onClick={handleSubmit}
             disabled={loading | done}
             clearHandler={clearHandler}
+            data-testid="upload-button"
           >
             {done ? 'Done' : error ? 'Ошибка' : 'Начать генерацию'}
           </UploadButton>
@@ -97,9 +104,17 @@ const GenerationPage = () => {
       </div>
 
       <div className={styles.massegeContainer}>
-        {loading && <div>Идёт процесс генерации...</div>}
-        {done && <div>Файл сгенерирован и загружен!</div>}
-        {error && <div className={styles.error}>{error}</div>}
+        {loading && (
+          <div data-testid="generation-message">Идёт процесс генерации...</div>
+        )}
+        {done && (
+          <div data-testid="success-message">Файл сгенерирован и загружен!</div>
+        )}
+        {error && (
+          <div className={styles.error} data-testid="error-message">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );

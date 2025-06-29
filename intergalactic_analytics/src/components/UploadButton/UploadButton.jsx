@@ -12,6 +12,7 @@ const UploadButton = ({
   return (
     <div className={styles.container}>
       <button
+        data-testid={'submit-upload-button'}
         className={classNames(styles.uploadButton, className, {
           [styles.init]: type === 'init',
           [styles.file]: type === 'file',
@@ -29,7 +30,12 @@ const UploadButton = ({
       </button>
 
       {['error', 'file', 'done'].includes(type) && (
-        <button onClick={clearHandler} className={styles.clearButton}>
+        <button
+          data-testid={'clear-upload-button'}
+          onClick={clearHandler}
+          className={styles.clearButton}
+          {...props}
+        >
           <img className={styles.clearButtonImage} src="/clear_button.svg" />
         </button>
       )}
